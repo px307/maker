@@ -8,7 +8,7 @@ Taking ideas from other patterns for dependency injection like Resource Locator,
 
 I find this pattern great for java mobile applications that cannot support a heavy framework for DI like Guice or Spring.
 
-But that doesn't mean it cannot be used for large java enterprise applications, currently we are using this pattern in the company I work for. 
+But that doesn't mean it cannot be used for large java enterprise applications, currently we are using this pattern in the company I work for medium size enterprise production applications and it behaves well. 
 
 It can also be used in conjunction with frameworks like Spring, this way you can for example share singleton instances between Spring managed beans and other objects that are not Spring Context aware.
 
