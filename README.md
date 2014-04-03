@@ -1,4 +1,4 @@
-maker
+Maker
 =====
 
 A basic light-weight pragmatic programmatic Dependency Injection Pattern
@@ -12,6 +12,6 @@ But that doesn't mean it cannot be used for large java enterprise applications, 
 
 It can also be used in conjunction with frameworks like Spring, this way you can for example share singleton instances between Spring managed beans and other objects that are not Spring Context aware.
 
-To try it just clone this git project and import the maker-pattern project into eclipse, or download it in zip format using github downlad as zip button in the lower right panel.
+To try it just clone this git project and import the maker-pattern project into eclipse, or download it in zip format using github downlad zip button in the lower right panel.
 
 Enjoy.
