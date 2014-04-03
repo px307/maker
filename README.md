@@ -14,4 +14,6 @@ It can also be used in conjunction with frameworks like Spring, this way you can
 
 To try it just clone this git project and import the maker-pattern project into eclipse, or download it in zip format using github downlad zip button in the lower right panel.
 
+In that project you can find a very simple implementation of the patter called the Living Being Hospital that shows some of the important features of the pattern.
+
 Enjoy.
