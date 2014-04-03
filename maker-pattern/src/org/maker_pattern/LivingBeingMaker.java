@@ -24,6 +24,7 @@ import org.maker_pattern.plants.Plant;
  *  	This version is also capable of wiring beans inside the same enum and cross enum wiring too, allowing us to separate the beans
  *      by domain or responsibility in different files and wire them if needed
  *  0.3 Added init, start, shutdown, clear and clearAll life cycle methods
+ *  0.4 Added Properties parameter to getInstance method for supporting initialization properties
  * @author Ramiro.Serrato
  *
  */
