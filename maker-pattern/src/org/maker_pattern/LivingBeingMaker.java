@@ -142,20 +142,22 @@ public enum LivingBeingMaker {
 	 * @param properties A Properties object that may contain information needed for the instance creation
 	 * @return The instance as an Object
 	 */
-	private synchronized Object getInstance(Properties properties) {
-		if(instance == null) {
-			Object newInstance = this.createInstance(properties);
-			start();
-			
-			if(singleton) { 
-				instance = newInstance; // lazy initialization 
-			} 
-			
-			else  {
-				return newInstance;
+	private Object getInstance(Properties properties) {
+		if (singleton) {
+			if (instance == null) {
+				synchronized (this) {
+					if (instance == null) {
+						instance = this.createInstance(properties);
+						start();
+					}
+				}
 			}
+
+		} else {
+			instance = this.createInstance(properties);
+			start();
 		}
-		
+
 		return instance;
 	}
 	
