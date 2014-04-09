@@ -24,6 +24,7 @@ import org.maker_pattern.plants.Plant;
  *  	This version is also capable of wiring beans inside the same enum and cross enum wiring too, allowing us to separate the beans
  *      by domain or responsibility in different files and wire them if needed
  *  0.3 Added init, start, shutdown, clear and clearAll life cycle methods
+ *  0.4 Added Properties parameter to getInstance method for supporting initialization properties
  * @author Ramiro.Serrato
  *
  */
@@ -142,22 +143,20 @@ public enum LivingBeingMaker {
 	 * @param properties A Properties object that may contain information needed for the instance creation
 	 * @return The instance as an Object
 	 */
-	private Object getInstance(Properties properties) {
-		if (singleton) {
-			if (instance == null) {
-				synchronized (this) {
-					if (instance == null) {
-						instance = this.createInstance(properties);
-						start();
-					}
-				}
-			}
-
-		} else {
-			instance = this.createInstance(properties);
+	private synchronized Object getInstance(Properties properties) {
+		if(instance == null) {
+			Object newInstance = this.createInstance(properties);
 			start();
+			
+			if(singleton) { 
+				instance = newInstance; // lazy initialization 
+			} 
+			
+			else  {
+				return newInstance;
+			}
 		}
-
+		
 		return instance;
 	}
 	
