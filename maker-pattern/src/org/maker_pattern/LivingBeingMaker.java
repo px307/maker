@@ -35,7 +35,7 @@ public enum LivingBeingMaker {
 
 	SPARKY_DOG (true) {
 		@Override
-		public Object createInstance(Properties properties) {
+		public Dog createInstance(Properties properties) {
 			Dog sparky = new Dog();
 			sparky.setName(properties.getProperty("sparky.name"));
 			return sparky;
