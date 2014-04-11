@@ -124,11 +124,11 @@ public enum LivingBeingMaker {
 		generalProperties = livingBeingroperties;
 	}
 	
+	protected static Properties generalProperties;
+	
 	private LivingBeingMaker(Boolean singleton) {
 		this.singleton = singleton;
 	}
-	
-	protected static Properties generalProperties;
 	
 	private Boolean singleton;
 	private Object instance;
@@ -173,7 +173,7 @@ public enum LivingBeingMaker {
 	 * You can put some shutdown logic here, this method can be overriden inside the enum value definition. 
 	 *  Shutdown logic can be: external resources release, clear chache, etc. 
 	 */
-	public void shutdown() {
+	public void shutdown(Object object) {
 		;
 	}
 	
