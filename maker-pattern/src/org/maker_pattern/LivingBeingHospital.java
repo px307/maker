@@ -66,7 +66,7 @@ public class LivingBeingHospital {
 		curePlant(myCeiba);
 	}
 	
-	public void doHospitalDay() {
+	public void runHospitalDay() {
 		cureAnimals();
 		curePlants();	
 		attendLabradorDogBirth(sparkyFamily);
@@ -74,6 +74,6 @@ public class LivingBeingHospital {
 	
 	public static void main(String[] args) {
 		LivingBeingHospital generalHospital = new LivingBeingHospital();
-		generalHospital.doHospitalDay();
+		generalHospital.runHospitalDay();
 	}
 }
