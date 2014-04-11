@@ -25,6 +25,7 @@ import org.maker_pattern.plants.Plant;
  *      by domain or responsibility in different files and wire them if needed
  *  0.3 Added init, start, shutdown, clear and clearAll life cycle methods
  *  0.4 Added Properties parameter to getInstance method for supporting initialization properties
+ *  0.5 Removed init method as it was not really useful
  * @author Ramiro.Serrato
  *
  */
