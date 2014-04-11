@@ -125,7 +125,6 @@ public enum LivingBeingMaker {
 	
 	private LivingBeingMaker(Boolean singleton) {
 		this.singleton = singleton;
-		init();
 	}
 	
 	protected static Properties generalProperties;
@@ -149,27 +148,15 @@ public enum LivingBeingMaker {
 				synchronized (this) {
 					if (instance == null) {
 						instance = this.createInstance(properties);
-						start();
 					}
 				}
 			}
-
-		} else {
-			instance = this.createInstance(properties);
-			start();
-		}
-
-		return instance;
-
-	}
+		} 
 	
-	/**
-	 * You can put some initialization logic here, this method can be overriden inside the enum value definition. 
-	 *  Initialization logic can be: getting system properties, starting db connections, etc.
-	 *  The logic in this method will be executed in the moment the enum value (not the bean instance) is constructed 
-	 */
-	protected void init() {
-		;
+		Object localInstance = (instance == null) ? this.createInstance(properties) : instance;
+		start(localInstance);
+		
+		return localInstance;
 	}
 	
 	/**
@@ -177,7 +164,7 @@ public enum LivingBeingMaker {
 	 *  is created, for prototypes that means every time the getInstance method is called, for singletons only the first
 	 *  time the getInstance method is called
 	 */
-	protected void start() {
+	protected void start(Object object) {
 		;
 	}
 	
