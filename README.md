@@ -1,7 +1,7 @@
 Maker Pattern
 =====
 
-A basic light-weight pragmatic programmatic Dependency Resolution Pattern
+A basic light-weight pragmatic programmatic Dependency Resolution Pattern and Micro-Framework
 
 
 Taking ideas from other patterns for dependency injection like Resource Locator, Abstract Factory, Factory Methods, Spring IOC Container and the singleton pattern implementation with java enums. I tried to implement the things that I found useful from these patterns but with the goal of reducing the number of components and the overhead when loading the DI container.
