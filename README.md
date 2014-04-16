@@ -14,7 +14,7 @@ But that doesn't mean it cannot be used for large java enterprise applications, 
 
 It can also be used in conjunction with frameworks like Spring, this way you can for example share singleton instances between Spring managed beans and other objects that are not Spring Context aware.
 
-To try it just clone this git project and import the maker-pattern project into eclipse, or download it in zip format using github downlad zip button in the lower right panel.
+To try it just clone this git project and import the maker-pattern project into eclipse, or download it in zip format using github downlad zip button in the lower right panel. Then import the project to Eclipse and run the class LivingBeingHospital.java.
 
 In that project you can find a very simple implementation of the pattern called Living Being Hospital which shows some of the important features of this pattern and micro-framework
 
