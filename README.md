@@ -1,4 +1,4 @@
-Maker
+Maker Pattern
 =====
 
 A basic light-weight pragmatic programmatic Dependency Resolution Pattern
