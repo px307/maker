@@ -113,7 +113,7 @@ public enum LivingBeingMaker {
 	static {  // here you can define static stuff like properties or xml loaded configuration 
 	    Properties livingBeingroperties = new Properties();
 		
-		try { // load plant properties from xml and properties files
+		try { // load plant and animal configuration from xml and properties files
 			livingBeingroperties.loadFromXML(LivingBeingMaker.class.getResourceAsStream("resources/plant-config.xml"));
 			livingBeingroperties.load(LivingBeingMaker.class.getResourceAsStream("resources/animal-config.properties"));
 		} catch (IOException e) {
