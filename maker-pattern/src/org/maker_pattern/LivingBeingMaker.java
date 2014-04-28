@@ -173,15 +173,18 @@ public enum LivingBeingMaker {
 	 * You can put some shutdown logic here, this method can be overriden inside the enum value definition. 
 	 *  Shutdown logic can be: external resources release, clear chache, etc. 
 	 */
-	public void shutdown(Object object) {
+	public void shutdown() throws Exception {
 		;
 	}
 	
 	/**
 	 * This method will call the {@link #shutdown()} method for all the enums in the maker
+	 * @throws Exception 
 	 */
-	public void shutdownAll() {
-		;
+	public void shutdownAll() throws Exception {
+		for (LivingBeingMaker value : LivingBeingMaker.values()) {
+			  value.shutdown();
+		}
 	}
 	
 	/**
