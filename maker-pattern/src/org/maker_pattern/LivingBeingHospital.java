@@ -20,18 +20,18 @@ public class LivingBeingHospital {
 	
 	/*** Singletons, look at the different ways for injecting dependencies ***/
 
-	private Dog sparky = LivingBeingMaker.getDog(SPARKY_DOG); // By concrete class
-	private Dog pinky = LivingBeingMaker.getDog(PINKY_DOG); // By concrete class
+	private Dog sparky = LivingBeingMaker.getDog(SPARKY_DOG); // By concrete class using factory method
+	private Dog pinky = LivingBeingMaker.get(PINKY_DOG); // By concrete class using the get generic method
 	
 	private DogFamily sparkyFamily = LivingBeingMaker.getDogFamily(SPARKY_FAMILY);	// this is a wired bean 
 	
 	/*** Prototypes, (new instance every time) objects ***/
 	
-	private Animal labrador1 = LivingBeingMaker.getDog(LABRADOR); // by abstract class 
-	private Animal labrador2 = LivingBeingMaker.getAnimal(LABRADOR); // by abstract class 
-	private Animal siamese = LivingBeingMaker.getAnimal(SIAMESE);  // By abstract class
-	private Plant myDaisy = LivingBeingMaker.getPlant(DAISY); // Using interface injection
-	private Plant myCeiba = LivingBeingMaker.getPlant(CEIBA); // Using interface injection
+	private Animal labrador1 = LivingBeingMaker.getAnimal(LABRADOR); // by abstract class using the Animal factory method
+	private Animal labrador2 = LivingBeingMaker.get(LABRADOR); // by abstract class using the get generic method
+	private Animal siamese = LivingBeingMaker.get(SIAMESE);  // By abstract class using the get generic method
+	private Plant myDaisy = LivingBeingMaker.get(DAISY); // Using interface injection using the get generic method
+	private Plant myCeiba = LivingBeingMaker.get(CEIBA); // Using interface injection using the get generic method
 	
 	private void cureAnimal(Animal animal) {
 		System.out.print("Curing animal...");

@@ -109,6 +109,10 @@ public enum LivingBeingMaker {
 		return (Plant) livingBeingMaker.getInstance(generalProperties);
 	}
 	
+	public static <T> T get(LivingBeingMaker livingBeingMaker) {
+		return livingBeingMaker.getInstance(generalProperties);
+	}
+	
 	/**** From here and down generic code, change this only if you know what you are doing ****/
 	static {  // here you can define static stuff like properties or xml loaded configuration 
 	    Properties livingBeingroperties = new Properties();
@@ -141,9 +145,9 @@ public enum LivingBeingMaker {
 	 * This is the method that handles the creation of instances based on the flag singleton it 
 	 *  will create a singleton or a prototype instance
 	 * @param properties A Properties object that may contain information needed for the instance creation
-	 * @return The instance as an Object
+	 * @return The instance as a generic Object
 	 */
-	private Object getInstance(Properties properties) {
+	private <T> T getInstance(Properties properties) {
 		if (singleton) {
 			if (instance == null) {
 				synchronized (this) {
@@ -154,7 +158,8 @@ public enum LivingBeingMaker {
 			}
 		} 
 	
-		Object localInstance = (instance == null) ? this.createInstance(properties) : instance;
+		@SuppressWarnings("unchecked")
+		T localInstance = (T) (instance == null ? this.createInstance(properties) : instance);
 		start(localInstance);
 		
 		return localInstance;
