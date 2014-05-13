@@ -195,9 +195,9 @@ public enum LivingBeingMaker {
 	
 	/**
 	 * This method contains the logic for creating the instance, it receives a Properties
-	 *  object as a parameter that my contain initial properties for creating the instances
+	 *  object as a parameter that may contain initial properties for creating the instances
 	 * @param properties a Properties object
 	 * @return The created instance as an Object
 	 */
-	public abstract Object createInstance(Properties properties);
+	protected abstract Object createInstance(Properties properties);
 }
