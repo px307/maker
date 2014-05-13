@@ -86,31 +86,31 @@ public enum LivingBeingMaker {
 	/** Here define factory methods **/
 	
 	public static Dog getDog(LivingBeingMaker livingBeingMaker) {
-		return (Dog) livingBeingMaker.getInstance(generalProperties);
+		return (Dog) livingBeingMaker.getInstance();
 	}
 	
 	public static Cat getCat(LivingBeingMaker livingBeingMaker) {
-		return (Cat) livingBeingMaker.getInstance(generalProperties);
+		return (Cat) livingBeingMaker.getInstance();
 	}
 	
 	public static DogFamily getDogFamily(LivingBeingMaker livingBeingMaker) {
-		return (DogFamily) livingBeingMaker.getInstance(generalProperties);
+		return (DogFamily) livingBeingMaker.getInstance();
 	}
 	
 	public static CatFamily getCatFamily(LivingBeingMaker livingBeingMaker) {
-		return (CatFamily) livingBeingMaker.getInstance(generalProperties);
+		return (CatFamily) livingBeingMaker.getInstance();
 	}
 	
 	public static Animal getAnimal(LivingBeingMaker livingBeingMaker) {
-		return (Animal) livingBeingMaker.getInstance(generalProperties);
+		return (Animal) livingBeingMaker.getInstance();
 	}
 	
 	public static Plant getPlant(LivingBeingMaker livingBeingMaker) {
-		return (Plant) livingBeingMaker.getInstance(generalProperties);
+		return (Plant) livingBeingMaker.getInstance();
 	}
 	
 	public static <T> T get(LivingBeingMaker livingBeingMaker) {
-		return livingBeingMaker.getInstance(generalProperties);
+		return livingBeingMaker.getInstance();
 	}
 	
 	/**** From here and down generic code, change this only if you know what you are doing ****/
@@ -139,6 +139,16 @@ public enum LivingBeingMaker {
 	
 	public Boolean isSingleton() {
 		return singleton;
+	}
+	
+	/**
+	 * Shortcut for the getInstance(Properties) method that passes the generalProperties object
+	 *  as parameter
+	 * @return
+	 * @author Ramiro.Serrato
+	 */
+	private <T> T getInstance() {
+		return getInstance(generalProperties);
 	}
 	
 	/**
