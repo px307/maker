@@ -6,9 +6,7 @@ package org.maker_pattern;
 import java.io.IOException;
 import java.util.Properties;
 
-import org.maker_pattern.animals.Animal;
 import org.maker_pattern.animals.Cat;
-import org.maker_pattern.animals.CatFamily;
 import org.maker_pattern.animals.Dog;
 import org.maker_pattern.animals.DogFamily;
 import org.maker_pattern.plants.Ceiba;
@@ -56,8 +54,10 @@ public enum LivingBeingMaker {
 		@Override
 		public DogFamily createInstance(Properties properties) {
 			DogFamily dogFamily = new DogFamily();
-			dogFamily.setParent1(getDog(SPARKY_DOG));
-			dogFamily.setParent2(getDog(PINKY_DOG));
+			Dog parent1 = get(SPARKY_DOG);
+			Dog parent2 = get(PINKY_DOG);
+			dogFamily.setParent1(parent1);
+			dogFamily.setParent2(parent2);
 			return dogFamily;
 		}
 	},
@@ -83,37 +83,6 @@ public enum LivingBeingMaker {
 		} 
 	};
 	
-	/** Here define factory methods **/
-	
-	public static Dog getDog(LivingBeingMaker livingBeingMaker) {
-		return (Dog) livingBeingMaker.getInstance();
-	}
-	
-	public static Cat getCat(LivingBeingMaker livingBeingMaker) {
-		return (Cat) livingBeingMaker.getInstance();
-	}
-	
-	public static DogFamily getDogFamily(LivingBeingMaker livingBeingMaker) {
-		return (DogFamily) livingBeingMaker.getInstance();
-	}
-	
-	public static CatFamily getCatFamily(LivingBeingMaker livingBeingMaker) {
-		return (CatFamily) livingBeingMaker.getInstance();
-	}
-	
-	public static Animal getAnimal(LivingBeingMaker livingBeingMaker) {
-		return (Animal) livingBeingMaker.getInstance();
-	}
-	
-	public static Plant getPlant(LivingBeingMaker livingBeingMaker) {
-		return (Plant) livingBeingMaker.getInstance();
-	}
-	
-	public static <T> T get(LivingBeingMaker livingBeingMaker) {
-		return livingBeingMaker.getInstance();
-	}
-	
-	/**** From here and down generic code, change this only if you know what you are doing ****/
 	static {  // here you can define static stuff like properties or xml loaded configuration 
 	    Properties livingBeingroperties = new Properties();
 		
@@ -126,6 +95,12 @@ public enum LivingBeingMaker {
 		}
 		
 		generalProperties = livingBeingroperties;
+	}
+	
+	/**** From here and down generic code, change this only if you know what you are doing ****/
+	
+	public static <T> T get(LivingBeingMaker livingBeingMaker) {
+		return livingBeingMaker.getInstance();
 	}
 	
 	protected static Properties generalProperties;
