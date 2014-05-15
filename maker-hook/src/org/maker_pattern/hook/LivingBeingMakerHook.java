@@ -1,8 +1,9 @@
 /**
  * May 12, 2014 File created by Ramiro.Serrato
  */
-package org.maker_pattern;
+package org.maker_pattern.hook;
 
+import org.maker_pattern.LivingBeingMaker;
 import org.maker_pattern.LivingBeingMaker.MakerHook;
 import org.maker_pattern.animals.Dog;
 
@@ -15,7 +16,7 @@ public enum LivingBeingMakerHook implements MakerHook {
 	
 	LONG_COAT_AKITA (LivingBeingMaker.AKITA) {
 		@Override
-		public Dog getInstance() {
+		public Dog makeInstance() {
 			Dog longCoatAkita = new Dog();
 			longCoatAkita.setName("Long coat akita");
 			return longCoatAkita; 
@@ -24,7 +25,7 @@ public enum LivingBeingMakerHook implements MakerHook {
 	
 	YELLOW_LABRADOR (LivingBeingMaker.LABRADOR) {
 		@Override
-		public Dog getInstance() {
+		public Dog makeInstance() {
 			Dog yellowLabrador = new Dog();
 			yellowLabrador.setName("Yellow Labrador");
 			return yellowLabrador; 
@@ -32,6 +33,6 @@ public enum LivingBeingMakerHook implements MakerHook {
 	};
 	
 	private LivingBeingMakerHook(LivingBeingMaker otherMaker) {
-		otherMaker.hook = this;
+		otherMaker.setHook(this);
 	}
 }

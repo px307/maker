@@ -27,11 +27,11 @@ import org.maker_pattern.animals.Dog;
 public enum LivingBeingMaker {
 	
 	/*** Object configuration, definition, wiring ***/
-	//  Pattern:   NAME (isSingleton) { createInstance() { <object creation logic > } }
+	//  Pattern:   NAME (isSingleton) { makeInstance() { <object creation logic > } }
 
 	LABRADOR (false) { 
 		@Override 
-		public Dog createInstance(Properties properties) { 
+		public Dog makeInstance(Properties properties) { 
 			Dog genericLabrador = new Dog();
 			genericLabrador.setName("Generic Labrador");
 			return genericLabrador; 
@@ -40,7 +40,7 @@ public enum LivingBeingMaker {
 	
 	AKITA (true) { 
 		@Override 
-		public Dog createInstance(Properties properties) { 
+		public Dog makeInstance(Properties properties) { 
 			Dog akita = new Dog();
 			akita.setName("Standard Akita");
 			return akita; 
@@ -48,7 +48,7 @@ public enum LivingBeingMaker {
 	};
 	
 	static {  // here you can define static stuff like properties or xml loaded configuration 
-		findHooks(null);
+		findHooks();
 	}
 	
 	/**** From here and down generic code, change this only if you know what you are doing ****/	
@@ -57,8 +57,9 @@ public enum LivingBeingMaker {
 		return livingBeingMaker.getInstance(generalProperties);
 	}
 	
-	private static void findHooks(String packageName) {
-		packageName = (packageName == null) ? LivingBeingMaker.class.getPackage().getName() : packageName;
+	private static void findHooks() {
+		String packageName = System.getProperty("maker.hooks.package");
+		packageName = (packageName == null) ? LivingBeingMaker.class.getPackage().getName() : packageName; // if the property is not set it will use current package
 		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
 		
 		try {
@@ -84,16 +85,16 @@ public enum LivingBeingMaker {
 		this.singleton = singleton;
 	}
 	
-	private LivingBeingMaker(MakerHook otherMaker) {
-		this.hook = otherMaker;
-	}
-	
 	private Boolean singleton;
 	private Object instance;
 	protected MakerHook hook;
 	
 	public Boolean isSingleton() {
 		return singleton;
+	}
+	
+	public void setHook(MakerHook hook) {
+		this.hook = hook;
 	}
 	
 	/**
@@ -110,13 +111,13 @@ public enum LivingBeingMaker {
 			if (instance == null) {
 				synchronized (this) {
 					if (instance == null) {
-						instance = (hook != null) ? hook.getInstance() : this.createInstance(properties);
+						instance = (hook != null) ? hook.makeInstance() : this.makeInstance(properties);
 					}
 				}
 			}
 		}
 			
-		localInstance = (T) (instance == null ? (hook != null) ? hook.getInstance() : this.createInstance(properties) : instance);
+		localInstance = (T) (instance == null ? (hook != null) ? hook.makeInstance() : this.makeInstance(properties) : instance);
 	
 		start(localInstance);
 		return localInstance;
@@ -171,7 +172,7 @@ public enum LivingBeingMaker {
 	 * @param properties a Properties object
 	 * @return The created instance as an Object
 	 */
-	protected abstract Object createInstance(Properties properties);
+	protected abstract Object makeInstance(Properties properties);
 	
 	/**
 	 * Interface for creating MakerHooks that are useful for overriding instance creation logic
@@ -180,6 +181,6 @@ public enum LivingBeingMaker {
 	 *
 	 */
 	public static interface MakerHook { 
-		public <T> T getInstance();
+		public <T> T makeInstance();
 	}
 }

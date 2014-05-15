@@ -32,6 +32,7 @@ public class LivingBeingHospital {
 	}
 	
 	public static void main(String[] args) {
+		System.setProperty("maker.hooks.package", "org.maker_pattern.hook");  // setting the package where the hooks are located
 		LivingBeingHospital generalHospital = new LivingBeingHospital();
 		generalHospital.runHospitalDay();
 	}
