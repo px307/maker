@@ -47,7 +47,7 @@ public enum LivingBeingMaker {
 		} 
 	};
 	
-	/**** From here and down generic code, change this only if you know what you are doing ****/	
+	/**** From here and down framework code, change this only if you know what you are doing ****/	
 	
 	static {  // here you can define static stuff like properties or xml loaded configuration 
 		findHooks();
