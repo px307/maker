@@ -34,7 +34,7 @@ public enum LivingBeingMaker {
 
 	SPARKY_DOG (true) {
 		@Override
-		public Dog createInstance(Properties properties) {
+		public Dog makeInstance(Properties properties) {
 			Dog sparky = new Dog();
 			sparky.setName(properties.getProperty("sparky.name"));
 			return sparky;
@@ -43,7 +43,7 @@ public enum LivingBeingMaker {
 
 	PINKY_DOG (true) {
 		@Override
-		public Dog createInstance(Properties properties) {
+		public Dog makeInstance(Properties properties) {
 			Dog pinky = new Dog();
 			pinky.setName(properties.getProperty("pinky.name"));
 			return pinky;
@@ -52,7 +52,7 @@ public enum LivingBeingMaker {
 	
 	SPARKY_FAMILY (true) {  // A wired object
 		@Override
-		public DogFamily createInstance(Properties properties) {
+		public DogFamily makeInstance(Properties properties) {
 			DogFamily dogFamily = new DogFamily();
 			Dog parent1 = get(SPARKY_DOG);
 			Dog parent2 = get(PINKY_DOG);
@@ -62,12 +62,12 @@ public enum LivingBeingMaker {
 		}
 	},
 		
-	SIAMESE (false)  { @Override public Cat createInstance(Properties properties) { return new Cat(); } },
-	LABRADOR (false) { @Override public Dog createInstance(Properties properties) { return new Dog(); } },
+	SIAMESE (false)  { @Override public Cat makeInstance(Properties properties) { return new Cat(); } },
+	LABRADOR (false) { @Override public Dog makeInstance(Properties properties) { return new Dog(); } },
 	
 	DAISY (false) { 
 		@Override	
-		public Plant createInstance(Properties properties) {	
+		public Plant makeInstance(Properties properties) {	
 			Daisy daisy = new Daisy();
 			daisy.setKind(properties.getProperty("daisy_kind"));
 			return daisy;	
@@ -76,7 +76,7 @@ public enum LivingBeingMaker {
 	
 	CEIBA (false) { 
 		@Override 
-		public Plant createInstance(Properties properties) { 
+		public Plant makeInstance(Properties properties) { 
 			Ceiba ceiba = new Ceiba();
 			ceiba.setAge(new Integer(properties.getProperty("ceiba_age")));
 			return ceiba;	
@@ -137,14 +137,14 @@ public enum LivingBeingMaker {
 			if (instance == null) {
 				synchronized (this) {
 					if (instance == null) {
-						instance = this.createInstance(properties);
+						instance = this.makeInstance(properties);
 					}
 				}
 			}
 		} 
 	
 		@SuppressWarnings("unchecked")
-		T localInstance = (T) (instance == null ? this.createInstance(properties) : instance);
+		T localInstance = (T) (instance == null ? this.makeInstance(properties) : instance);
 		start(localInstance);
 		
 		return localInstance;
@@ -199,5 +199,5 @@ public enum LivingBeingMaker {
 	 * @param properties a Properties object
 	 * @return The created instance as an Object
 	 */
-	protected abstract Object createInstance(Properties properties);
+	protected abstract Object makeInstance(Properties properties);
 }
