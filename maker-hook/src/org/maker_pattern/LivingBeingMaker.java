@@ -47,11 +47,11 @@ public enum LivingBeingMaker {
 		} 
 	};
 	
+	/**** From here and down generic code, change this only if you know what you are doing ****/	
+	
 	static {  // here you can define static stuff like properties or xml loaded configuration 
 		findHooks();
 	}
-	
-	/**** From here and down generic code, change this only if you know what you are doing ****/	
 	
 	public static <T> T get(LivingBeingMaker livingBeingMaker) {
 		return livingBeingMaker.getInstance(generalProperties);
