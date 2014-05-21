@@ -112,14 +112,18 @@ public enum LivingBeingMaker {
 				synchronized (this) {
 					if (instance == null) {
 						instance = (hook != null) ? hook.makeInstance() : this.makeInstance(properties);
+						localInstance = (T) instance;
+						start(localInstance);
 					}
 				}
 			}
 		}
 			
-		localInstance = (T) (instance == null ? (hook != null) ? hook.makeInstance() : this.makeInstance(properties) : instance);
-	
-		start(localInstance);
+		else {
+			localInstance = (T) (hook != null ? hook.makeInstance() : this.makeInstance(properties));
+			start(localInstance);
+		}
+					
 		return localInstance;
 	}
 	

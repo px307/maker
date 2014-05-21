@@ -3,7 +3,10 @@
  */
 package org.maker_pattern;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Properties;
 
 import org.maker_pattern.animals.Cat;
@@ -84,6 +87,8 @@ public enum LivingBeingMaker {
 	};
 	
 	static {  // here you can define static stuff like properties or xml loaded configuration 
+		findHooks(); // this line is necessary for supporting MakerHook
+		
 	    Properties livingBeingroperties = new Properties();
 		
 		try { // load plant and animal configuration from xml and properties files
@@ -97,12 +102,34 @@ public enum LivingBeingMaker {
 		generalProperties = livingBeingroperties;
 	}
 	
-	/**** From here and down generic code, change this only if you know what you are doing ****/
+	/**** From here framework code, change this only if you know what you are doing ****/	
 	
 	public static <T> T get(LivingBeingMaker livingBeingMaker) {
-		return livingBeingMaker.getInstance();
+		return livingBeingMaker.getInstance(generalProperties);
 	}
 	
+	private static void findHooks() {
+		String packageName = System.getProperty("maker.hooks.package");
+		packageName = (packageName == null) ? LivingBeingMaker.class.getPackage().getName() : packageName; // if the property is not set it will use current package
+		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+		
+		try {
+	        File[] dirContent = new File(new URI(classLoader.getResource(packageName.replace(".", "/")).toString()).getPath()).listFiles();
+
+	        for(File file: dirContent){
+	            String currentName = file.getName();
+	            if(currentName.contains(".class")) {
+	            	Class<?> aHook = classLoader.loadClass(packageName + "." + currentName.substring(0, currentName.lastIndexOf(".")));
+	            	if(!aHook.isInterface() && MakerHook.class.isAssignableFrom(aHook)) {
+	            		Class.forName(aHook.getName(), true, classLoader);  // load and initialize
+	            	}
+	            }
+	        }
+		} catch (URISyntaxException | ClassNotFoundException e) {
+			throw new IllegalStateException("Error while trying to load MakerHook components", e);
+		}
+	}
+
 	protected static Properties generalProperties;
 	
 	private LivingBeingMaker(Boolean singleton) {
@@ -111,19 +138,14 @@ public enum LivingBeingMaker {
 	
 	private Boolean singleton;
 	private Object instance;
+	protected MakerHook hook;
 	
 	public Boolean isSingleton() {
 		return singleton;
 	}
 	
-	/**
-	 * Shortcut for the getInstance(Properties) method that passes the generalProperties object
-	 *  as parameter
-	 * @return
-	 * @author Ramiro.Serrato
-	 */
-	private <T> T getInstance() {
-		return getInstance(generalProperties);
+	public void setHook(MakerHook hook) {
+		this.hook = hook;
 	}
 	
 	/**
@@ -132,21 +154,27 @@ public enum LivingBeingMaker {
 	 * @param properties A Properties object that may contain information needed for the instance creation
 	 * @return The instance as a generic Object
 	 */
-	private <T> T getInstance(Properties properties) {
+	@SuppressWarnings("unchecked")
+	protected <T> T getInstance(Properties properties) {
+		T localInstance = (T) instance;
+		
 		if (singleton) {
 			if (instance == null) {
 				synchronized (this) {
 					if (instance == null) {
-						instance = this.makeInstance(properties);
+						instance = (hook != null) ? hook.makeInstance() : this.makeInstance(properties);
+						localInstance = (T) instance;
+						start(localInstance);
 					}
 				}
 			}
-		} 
-	
-		@SuppressWarnings("unchecked")
-		T localInstance = (T) (instance == null ? this.makeInstance(properties) : instance);
-		start(localInstance);
-		
+		}
+			
+		else {
+			localInstance = (T) (hook != null ? hook.makeInstance() : this.makeInstance(properties));
+			start(localInstance);
+		}
+					
 		return localInstance;
 	}
 	
@@ -200,4 +228,14 @@ public enum LivingBeingMaker {
 	 * @return The created instance as an Object
 	 */
 	protected abstract Object makeInstance(Properties properties);
+	
+	/**
+	 * Interface for creating MakerHooks that are useful for overriding instance creation logic
+	 *  for example if your main Maker factory is in a library and you need to override it in your application
+	 * @author Ramiro.Serrato
+	 *
+	 */
+	public static interface MakerHook { 
+		public <T> T makeInstance();
+	}
 }

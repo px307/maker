@@ -34,7 +34,7 @@ public class LivingBeingHospital {
 	private Plant myCeiba = LivingBeingMaker.get(CEIBA); // Using interface injection using the get generic method
 	
 	private void cureAnimal(Animal animal) {
-		System.out.print("Curing animal...");
+		System.out.print("Curing animal ["+animal.getName()+"]...");
 		animal.makeNoise();  // it hurts
 	}
 	
@@ -56,6 +56,8 @@ public class LivingBeingHospital {
 	}
 	
 	private void cureAnimals() {
+		cureAnimal(sparky);
+		cureAnimal(pinky);
 		cureAnimal(siamese);
 		cureAnimal(labrador1);
 		cureAnimal(labrador2);
