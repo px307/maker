@@ -3,6 +3,8 @@
  */
 package org.maker_pattern;
 
+import java.util.Properties;
+
 import org.maker_pattern.LivingBeingMaker.MakerHook;
 import org.maker_pattern.animals.Dog;
 
@@ -14,7 +16,7 @@ import org.maker_pattern.animals.Dog;
 public enum LivingBeingMakerHook implements MakerHook {
 	YELLOW_LABRADOR (LivingBeingMaker.LABRADOR) {
 		@Override
-		public Dog makeInstance() {
+		public Dog makeInstance(Properties properties) {
 			Dog yellowLabrador = new Dog();
 			yellowLabrador.setName("Yellow Labrador");
 			return yellowLabrador; 

@@ -99,13 +99,13 @@ public enum LivingBeingMaker {
 			throw new IllegalStateException(e.getMessage());
 		}
 		
-		generalProperties = livingBeingroperties;
+		properties = livingBeingroperties;
 	}
 	
 	/**** From here framework code, change this only if you know what you are doing ****/	
 	
 	public static <T> T get(LivingBeingMaker livingBeingMaker) {
-		return livingBeingMaker.getInstance(generalProperties);
+		return livingBeingMaker.getInstance(properties);
 	}
 	
 	private static void findHooks() {
@@ -130,7 +130,7 @@ public enum LivingBeingMaker {
 		}
 	}
 
-	protected static Properties generalProperties;
+	protected static Properties properties;
 	
 	private LivingBeingMaker(Boolean singleton) {
 		this.singleton = singleton;
@@ -150,7 +150,8 @@ public enum LivingBeingMaker {
 	
 	/**
 	 * This is the method that handles the creation of instances based on the flag singleton it 
-	 *  will create a singleton or a prototype instance
+	 *  will create a singleton or a prototype instance, it also makes sure that the hook is used for the instance creation
+	 *  if a hook is set for this Maker instance
 	 * @param properties A Properties object that may contain information needed for the instance creation
 	 * @return The instance as a generic Object
 	 */
@@ -162,7 +163,7 @@ public enum LivingBeingMaker {
 			if (instance == null) {
 				synchronized (this) {
 					if (instance == null) {
-						instance = (hook != null) ? hook.makeInstance() : this.makeInstance(properties);
+						instance = (hook != null) ? hook.makeInstance(properties) : this.makeInstance(properties);
 						localInstance = (T) instance;
 						start(localInstance);
 					}
@@ -171,7 +172,7 @@ public enum LivingBeingMaker {
 		}
 			
 		else {
-			localInstance = (T) (hook != null ? hook.makeInstance() : this.makeInstance(properties));
+			localInstance = (T) (hook != null ? hook.makeInstance(properties) : this.makeInstance(properties));
 			start(localInstance);
 		}
 					
@@ -183,7 +184,7 @@ public enum LivingBeingMaker {
 	 *  is created, for prototypes that means every time the getInstance method is called, for singletons only the first
 	 *  time the getInstance method is called
 	 */
-	protected void start(Object object) {
+	protected void start(Object instance) {
 		;
 	}
 	
@@ -236,6 +237,6 @@ public enum LivingBeingMaker {
 	 *
 	 */
 	public static interface MakerHook { 
-		public <T> T makeInstance();
+		public <T> T makeInstance(Properties properties);
 	}
 }
