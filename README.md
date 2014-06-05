@@ -4,7 +4,7 @@
 
 ## Welcome to the Maker project
 
-A basic light-weight pragmatic programmatic Dependency Resolution Pattern and Micro-Framework. I call it Micro-Framework because it is a single component framework, that is its main philosophy.
+A basic light-weight pragmatic programmatic Dependency Resolution Pattern and Micro-Framework. I call it Micro-Framework because its core philosophy is about having all the framework code in a single component in a few hundreds lines of code. That way we can use it without needing to import any dependencies, the framework code lives in the same place than your bean definitions, you can modify or customize it without having to browse class trees or extending components.
 
 The advantage of having a single component framework is that you have instant access to the framework code, you can customize it and play with it to fit your needs, another approach will be to extract the framework code and use it via composition but at this stage I consider that is better to have everything in the same file.
 
