@@ -5,9 +5,13 @@ package org.maker_pattern;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.List;
 import java.util.Properties;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 import org.maker_pattern.animals.Cat;
 import org.maker_pattern.animals.Dog;
@@ -109,25 +113,53 @@ public enum LivingBeingMaker {
 	}
 	
 	private static void findHooks() {
-		String packageName = System.getProperty("maker.hooks.package");
+		String packageName = System.getProperty("maker.hooks.package", null);
 		packageName = (packageName == null) ? LivingBeingMaker.class.getPackage().getName() : packageName; // if the property is not set it will use current package
 		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
 		
 		try {
-	        File[] dirContent = new File(new URI(classLoader.getResource(packageName.replace(".", "/")).toString()).getPath()).listFiles();
+	        @SuppressWarnings("rawtypes")
+			Enumeration resources = classLoader.getResources(packageName.replace(".", "/"));  // this will allow to reach the jar files content
+	        List<String> classes = new ArrayList<String>();
+			
+			while (resources.hasMoreElements()) { 
+				URL resource = (URL) resources.nextElement(); 
+				String dir = resource.getFile();
+				
+				if (resource.getFile().startsWith("file:") && dir.contains("!")) {  // it is a jar
+					String[] split = dir.split("!"); 
+					URL jar = new URL(split[0]); 
+					ZipInputStream zip = new ZipInputStream(jar.openStream()); 
+					ZipEntry entry = null; 
+					
+					while ((entry = zip.getNextEntry()) != null) { 
+						if (entry.getName().endsWith(".class")) { 
+							String className = entry.getName().replaceAll("[.]class", "").replace('/', '.'); 
+							classes.add(className);
+						}
+					}
+				}
 
-	        for(File file: dirContent){
-	            String currentName = file.getName();
-	            if(currentName.contains(".class")) {
-	            	Class<?> aHook = classLoader.loadClass(packageName + "." + currentName.substring(0, currentName.lastIndexOf(".")));
-	            	if(!aHook.isInterface() && MakerHook.class.isAssignableFrom(aHook)) {
-	            		Class.forName(aHook.getName(), true, classLoader);  // load and initialize
-	            	}
-	            }
+				else {
+					File[] files = new File(dir).listFiles();
+
+					for(File file : files) {
+						if(!file.isDirectory() && file.getName().endsWith(".class")) {
+							classes.add(packageName + '.' + file.getName().substring(0, file.getName().length() - 6)); 
+						}
+					}
+				}
+			}
+
+	        for(String clazz: classes) {
+            	Class<?> aHook = classLoader.loadClass(clazz);
+            	if(!aHook.isInterface() && MakerHook.class.isAssignableFrom(aHook)) {
+            		Class.forName(aHook.getName(), true, classLoader);  // load and initialize
+            	}
 	        }
-		} catch (URISyntaxException | ClassNotFoundException e) {
+		} catch (ClassNotFoundException | IOException e) {
 			throw new IllegalStateException("Error while trying to load MakerHook components", e);
-		}
+		} 
 	}
 
 	protected static Properties properties;
