@@ -1,4 +1,5 @@
 Maker Factory Pattern
+![Maker](http://www.raspacorp.com/images/Maker.png) 
 =====
 
 A basic light-weight pragmatic programmatic Dependency Resolution Pattern and Micro-Framework. I call it Micro-Framework because it is a single component framework, that is its main philosophy.
@@ -17,6 +18,6 @@ It can also be used in conjunction with frameworks like Spring, this way you can
 
 To try the framework just clone this git project and import the eclipse project maker-pattern, or download it in zip format using github downlad zip button in the lower right panel. Then import the project to Eclipse and run the class LivingBeingHospital.java.
 
-I will start the wiki for the project as soon as posible, there I will document the framework and some use cases. Meanwhile you can browse the project and see some of the code documentation.
+Look at the wiki for more documentation and examples.
 
 Enjoy.
