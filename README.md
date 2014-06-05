@@ -1,6 +1,5 @@
 # Maker Factory Pattern
-***
-
+=====
 ![Maker](http://www.raspacorp.com/images/Maker.png) 
 
 ## Welcome to the Maker projec
