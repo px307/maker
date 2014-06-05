@@ -15,7 +15,7 @@ But that doesn't mean it cannot be used for large java enterprise applications, 
 
 It can also be used in conjunction with frameworks like Spring, this way you can for example share singleton instances between Spring managed beans and other objects that are not Spring Context aware.
 
-To try the framewrk just clone this git project and import the eclipse projects, or download it in zip format using github downlad zip button in the lower right panel. Then import the project to Eclipse and run the class LivingBeingHospital.java.
+To try the framework just clone this git project and import the eclipse project maker-pattern, or download it in zip format using github downlad zip button in the lower right panel. Then import the project to Eclipse and run the class LivingBeingHospital.java.
 
 I will start the wiki for the project as soon as posible, there I will document the framework and some use cases. Meanwhile you can browse the project and see some of the code documentation.
 
