@@ -20,6 +20,6 @@ It can also be used in conjunction with frameworks like Spring, this way you can
 
 To try the framework just clone this git project and import the eclipse project maker-pattern, or download it in zip format using github downlad zip button in the lower right panel. Then import the project to Eclipse and run the class LivingBeingHospital.java.
 
-Look at the wiki for more documentation and examples.
+Look at the [wiki](https://github.com/raspacorp/maker/wiki) (currently under construction) for more documentation and examples.
 
 Enjoy.
