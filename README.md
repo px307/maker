@@ -1,6 +1,8 @@
 # Maker Factory Pattern
+***
 ![Maker](http://www.raspacorp.com/images/Maker.png) 
-=====
+
+## Welcome to the Maker projec
 
 A basic light-weight pragmatic programmatic Dependency Resolution Pattern and Micro-Framework. I call it Micro-Framework because it is a single component framework, that is its main philosophy.
 
