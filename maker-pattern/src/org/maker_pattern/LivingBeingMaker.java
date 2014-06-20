@@ -61,10 +61,8 @@ public enum LivingBeingMaker {
 		@Override
 		public DogFamily makeInstance(Properties properties) {
 			DogFamily dogFamily = new DogFamily();
-			Dog parent1 = get(SPARKY_DOG);
-			Dog parent2 = get(PINKY_DOG);
-			dogFamily.setParent1(parent1);
-			dogFamily.setParent2(parent2);
+			dogFamily.setParent1(LivingBeingMaker.<Dog>get(SPARKY_DOG));
+			dogFamily.setParent2(LivingBeingMaker.<Dog>get(PINKY_DOG));
 			return dogFamily;
 		}
 	},
@@ -108,8 +106,8 @@ public enum LivingBeingMaker {
 	
 	/**** From here framework code, change this only if you know what you are doing ****/	
 	
-	public static <T> T get(LivingBeingMaker livingBeingMaker) {
-		return livingBeingMaker.getInstance(properties);
+	public static <T> T get(LivingBeingMaker maker) {
+		return maker.<T>getInstance(properties);
 	}
 	
 	private static void findHooks() {
