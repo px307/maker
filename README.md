@@ -1,8 +1,8 @@
-# Maker Factory Pattern
+# Maker Factories
 
 ![Maker](http://www.raspacorp.com/images/Maker.png) 
 
-## Welcome to the Maker project
+## Welcome to the Maker Factory project or simply Maker
 
 A basic light-weight pragmatic programmatic Dependency Resolution Pattern and Micro-Framework. I call it Micro-Framework because its core philosophy is about having all the framework code in a single component in a few hundreds lines of code. That way we can use it without needing to import any dependencies, the framework code lives in the same place than your bean definitions, you can modify or customize it without having to browse class trees or extending components.
 
