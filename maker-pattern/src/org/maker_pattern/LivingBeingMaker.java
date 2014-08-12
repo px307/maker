@@ -31,6 +31,8 @@ import org.maker_pattern.plants.Plant;
  *  0.3 Added init, start, shutdown, clear and clearAll life cycle methods
  *  0.4 Added Properties parameter to getInstance method for supporting initialization properties
  *  0.5 Removed init method as it was not really useful
+ *  0.6 Added Maker Hook feature
+ *  0.7 Added Maker Hook search inside jar files
  * @author Ramiro.Serrato
  *
  */
@@ -76,7 +78,7 @@ public enum LivingBeingMaker {
 			Daisy daisy = new Daisy();
 			daisy.setKind(properties.getProperty("daisy_kind"));
 			return daisy;	
-		} 
+		}
 	},
 	
 	CEIBA (false) { 
@@ -85,7 +87,7 @@ public enum LivingBeingMaker {
 			Ceiba ceiba = new Ceiba();
 			ceiba.setAge(new Integer(properties.getProperty("ceiba_age")));
 			return ceiba;	
-		} 
+		}
 	};
 	
 	static {  // here you can define static stuff like properties or xml loaded configuration 
@@ -166,8 +168,8 @@ public enum LivingBeingMaker {
 		this.singleton = singleton;
 	}
 	
-	private Boolean singleton;
-	private Object instance;
+	private final Boolean singleton;
+	private volatile Object instance;
 	protected MakerHook hook;
 	
 	public Boolean isSingleton() {
@@ -267,6 +269,6 @@ public enum LivingBeingMaker {
 	 *
 	 */
 	public static interface MakerHook { 
-		public <T> T makeInstance(Properties properties);
+		public Object makeInstance(Properties properties);
 	}
 }
