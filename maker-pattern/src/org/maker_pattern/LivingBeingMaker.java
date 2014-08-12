@@ -265,8 +265,6 @@ public enum LivingBeingMaker {
 	/**
 	 * Interface for creating MakerHooks that are useful for overriding instance creation logic
 	 *  for example if your main Maker factory is in a library and you need to override it in your application
-	 * @author Ramiro.Serrato
-	 *
 	 */
 	public static interface MakerHook { 
 		public Object makeInstance(Properties properties);
