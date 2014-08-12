@@ -1,14 +1,14 @@
-# Maker Factory Pattern
+# Maker Factories
 
 ![Maker](http://www.raspacorp.com/images/Maker.png) 
 
-## Welcome to the Maker project
+## Welcome to the Maker Factory project or simply Maker
 
-A basic light-weight pragmatic programmatic Dependency Resolution Pattern and Micro-Framework. I call it Micro-Framework because its core philosophy is about having all the framework code in a single component in a few hundreds lines of code. That way we can use it without needing to import any dependencies, the framework code lives in the same place than your bean definitions, you can modify or customize it without having to browse class trees or extending components.
+A basic light-weight pragmatic programmatic Dependency Resolution pattern and micro-framework. I call it a micro-framework because its core philosophy is about having all the framework code in a single component in a few hundreds lines of code. That way we can use it without needing to import any dependencies, the framework code lives in the same place than your bean definitions.
 
 The advantage of having a single component framework is that you have instant access to the framework code, you can customize it and play with it to fit your needs, another approach will be to extract the framework code and use it via composition but at this stage I consider that is better to have everything in the same file.
 
-Taking ideas from other patterns for dependency injection like Resource Locator, Abstract Factory, Factory Methods, Spring IOC Container and the singleton pattern implementation with java enums. I tried to implement the things that I found useful from these patterns but with the goal of reducing the number of components and the overhead when loading the DI container.
+Taking ideas from other patterns for dependency injection like Resource Locator, Abstract Factory, Factory Methods, Spring IOC Container and the singleton pattern implementation with java enums. I tried to implement the things that I found useful from these patterns but with the goal of reducing the number of components and the overhead when loading the IOC container.
 
 One of the differences between Maker and Resource/Service Locator is the use of hard instead of weak references, it does not use a map or dictionary to register resources but enum values. Java enum types provide an easy way for creating objects called enum constants or enum values, those objects are instantiated when the enum class is loaded and initialized by the class loader in a sort of lazy initialization when one of the enum constants is referenced.
 
