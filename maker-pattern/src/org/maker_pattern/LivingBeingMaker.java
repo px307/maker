@@ -33,6 +33,7 @@ import org.maker_pattern.plants.Plant;
  *  0.5 Removed init method as it was not really useful
  *  0.6 Added Maker Hook feature
  *  0.7 Added Maker Hook search inside jar files
+ *  0.8 Used urldecode when finding maker hooks to solve blank space and special chars in path bug
  * @author Ramiro.Serrato
  *
  */
@@ -124,14 +125,13 @@ public enum LivingBeingMaker {
 			
 			while (resources.hasMoreElements()) { 
 				URL resource = (URL) resources.nextElement(); 
-				String dir = resource.getFile();
+				String dir = java.net.URLDecoder.decode(resource.getFile(), "UTF-8");
 				
 				if (resource.getFile().startsWith("file:") && dir.contains("!")) {  // it is a jar
 					String[] split = dir.split("!"); 
 					URL jar = new URL(split[0]); 
 					ZipInputStream zip = new ZipInputStream(jar.openStream()); 
 					ZipEntry entry = null; 
-					
 					while ((entry = zip.getNextEntry()) != null) { 
 						if (entry.getName().endsWith(".class")) { 
 							String className = entry.getName().replaceAll("[.]class", "").replace('/', '.'); 
@@ -142,10 +142,12 @@ public enum LivingBeingMaker {
 
 				else {
 					File[] files = new File(dir).listFiles();
-
-					for(File file : files) {
-						if(!file.isDirectory() && file.getName().endsWith(".class")) {
-							classes.add(packageName + '.' + file.getName().substring(0, file.getName().length() - 6)); 
+					if(files != null) {
+						for(File file : files) {
+							if(!file.isDirectory() && file.getName().endsWith(".class")) {
+								String className = packageName + '.' + file.getName().substring(0, file.getName().length() - 6);
+								classes.add(className); 
+							}
 						}
 					}
 				}
@@ -157,7 +159,7 @@ public enum LivingBeingMaker {
             		Class.forName(aHook.getName(), true, classLoader);  // load and initialize
             	}
 	        }
-		} catch (ClassNotFoundException | IOException e) {
+		} catch (Exception e) {
 			throw new IllegalStateException("Error while trying to load MakerHook components", e);
 		} 
 	}
