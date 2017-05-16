@@ -40,7 +40,7 @@ import org.maker_pattern.plants.Plant;
 public enum LivingBeingMaker {
 	
 	/*** Object configuration, definition, wiring ***/
-	//  Pattern:   NAME (isSingleton) { createInstance() { <object creation logic > } }
+	//  Pattern:   NAME (isSingleton) { makeInstance() { <object creation logic > } }
 
 	SPARKY_DOG (true) {
 		@Override
